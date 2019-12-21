@@ -8,10 +8,20 @@ name: Deploy to Amazon using serverless
 jobs:
   deploy:
     name: Deploy
-    runs-on: node-latest
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node_version: [10]
 
     steps:
     - uses: actions/checkout@v1
-    - run: npm config set prefix /usr/local
-    - run: npm install -g serverless
-    - run: serverless deploy --stage staging --verbose
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: npm setup
+      run: |
+        npm config set prefix /usr/local
+        npm install -g serverless        
+    - name: deploy
+      run: serverless deploy --stage staging --verbose
