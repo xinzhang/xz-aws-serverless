@@ -1,0 +1,17 @@
+on:
+  push:
+    branches:
+      - master
+
+name: Deploy to Amazon using serverless
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: node-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - run: npm config set prefix /usr/local
+    - run: npm install -g serverless
+    - run: serverless deploy --stage staging --verbose
