@@ -24,4 +24,4 @@ jobs:
         sudo npm config set prefix /usr/local
         sudo npm install -g serverless      
     - name: deploy
-      run: serverless deploy --stage staging --verbose
+      run: sudo serverless deploy --stage staging --verbose
